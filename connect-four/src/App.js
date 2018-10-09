@@ -28,9 +28,9 @@ class Board extends Component {
 	render() {
 		return (
 			<div> 
-				<Piece /> <Piece /> <Piece /> <br /> 
-				<Piece /> <Piece /> <Piece /> <br />
-				<Piece /> <Piece /> <Piece /> <br /> 
+				<Piece color="blue" /> <Piece color="blue"/> <Piece color="red"/> <br /> 
+				<Piece color="red" /> <Piece color="blue" /> <Piece color="red" /> <br />
+				<Piece color="red" /> <Piece color="blue" /> <Piece color="blue" /> <br /> 
 			</div> 
 		);
 	}
@@ -39,7 +39,7 @@ class Board extends Component {
 class Piece extends Component{
 	render() {
 		return (
-			<span class="dot"></span>
+			<span class={"dot " + this.props.color}></span>
 		);
 	}
 }
