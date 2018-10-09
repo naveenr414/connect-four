@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
@@ -64,9 +63,15 @@ class Piece extends Component{
 		}
 	}
 	
+	changeColor(){
+    this.setState({
+      color: "red",
+    });
+	}
+	
 	render() {
 		return (
-			<span class= {"dot " + this.state.color}></span>
+			<span className= {"dot " + this.state.color} onClick={() => this.changeColor()}></span>
 		);
 	}
 }
