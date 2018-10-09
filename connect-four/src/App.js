@@ -49,34 +49,43 @@ class Board extends Component {
 		}
 	}
 	
-	changeColor(row, column){
-		/* Change the color of the piece at row, column */ 
+	changeColor(column){
+		/* Place a piece on this column */ 
 		
-		var boardColors = this.state.boardColors.slice();
-		boardColors[row][column] = this.state.nextColor;
+		/* Find out which row is the lowest unfilled one */ 
+		var row = this.state.boardColors.length-1;
+		while(row>=0 && this.state.boardColors[row][column]!="blank") {
+			row-=1;
+		}
 				
-    this.setState({
-      boardColors: boardColors, 
-			nextColor: this.state.nextColor==="red"?"blue":"red",
-    });
+		/* If row is -1, then the column is completly filled */ 
+		if(row != -1) {
+			var boardColors = this.state.boardColors.slice();
+			boardColors[row][column] = this.state.nextColor;
+					
+			this.setState({
+				boardColors: boardColors, 
+				nextColor: this.state.nextColor==="red"?"blue":"red",
+			});
+		}
 	}
 	
 	render() {
 		return (
 			<div> 
-				<Piece color={this.state.boardColors[0][0]} onClick={() => this.changeColor(0,0)} />
-				<Piece color={this.state.boardColors[0][1]} onClick={() => this.changeColor(0,1)} />
-				<Piece color={this.state.boardColors[0][2]} onClick={() => this.changeColor(0,2)} />
+				<Piece color={this.state.boardColors[0][0]} onClick={() => this.changeColor(0)} />
+				<Piece color={this.state.boardColors[0][1]} onClick={() => this.changeColor(1)} />
+				<Piece color={this.state.boardColors[0][2]} onClick={() => this.changeColor(2)} />
 				<br /> 
 				
-				<Piece color={this.state.boardColors[1][0]} onClick={() => this.changeColor(1,0)} />
-				<Piece color={this.state.boardColors[1][1]} onClick={() => this.changeColor(1,1)} />
-				<Piece color={this.state.boardColors[1][2]} onClick={() => this.changeColor(1,2)} />
+				<Piece color={this.state.boardColors[1][0]} onClick={() => this.changeColor(0)} />
+				<Piece color={this.state.boardColors[1][1]} onClick={() => this.changeColor(1)} />
+				<Piece color={this.state.boardColors[1][2]} onClick={() => this.changeColor(2)} />
 				<br />
 				
-				<Piece color={this.state.boardColors[2][0]} onClick={() => this.changeColor(2,0)} />
-				<Piece color={this.state.boardColors[2][1]} onClick={() => this.changeColor(2,1)} />
-				<Piece color={this.state.boardColors[2][2]} onClick={() => this.changeColor(2,2)} />
+				<Piece color={this.state.boardColors[2][0]} onClick={() => this.changeColor(0)} />
+				<Piece color={this.state.boardColors[2][1]} onClick={() => this.changeColor(1)} />
+				<Piece color={this.state.boardColors[2][2]} onClick={() => this.changeColor(2)} />
 				<br /> 
 			</div> 
 		);
