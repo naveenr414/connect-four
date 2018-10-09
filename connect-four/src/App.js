@@ -6,11 +6,10 @@ class App extends Component {
 	
   render() {
     return (
-      <div className="App">
-		<Board> </Board> 
-		
-		<Status> </Status> 
-      </div>
+     <div className="App">
+			<Board />
+			<Status /> 
+     </div>
     );
   }
 }
@@ -46,6 +45,7 @@ class Board extends Component {
 	
 		this.state = {
 			boardColors: boardColors, 
+			nextColor: "red",
 		}
 	}
 	
@@ -53,10 +53,11 @@ class Board extends Component {
 		/* Change the color of the piece at row, column */ 
 		
 		var boardColors = this.state.boardColors.slice();
-		boardColors[row][column] = "red";
+		boardColors[row][column] = this.state.nextColor;
 				
     this.setState({
       boardColors: boardColors, 
+			nextColor: this.state.nextColor==="red"?"blue":"red",
     });
 	}
 	
