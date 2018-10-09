@@ -54,12 +54,13 @@ class Board extends Component {
 		
 		/* Find out which row is the lowest unfilled one */ 
 		var row = this.state.boardColors.length-1;
-		while(row>=0 && this.state.boardColors[row][column]!="blank") {
+		while(row>=0 && this.state.boardColors[row][column]!=="blank") {
+			alert(this.state.boardColors[row][column]);
 			row-=1;
 		}
 				
 		/* If row is -1, then the column is completly filled */ 
-		if(row != -1) {
+		if(row !== -1) {
 			var boardColors = this.state.boardColors.slice();
 			boardColors[row][column] = this.state.nextColor;
 					
