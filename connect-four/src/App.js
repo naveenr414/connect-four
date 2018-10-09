@@ -3,6 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+	/* A class for the whole App */
+	
   render() {
     return (
       <div className="App">
@@ -15,6 +17,9 @@ class App extends Component {
 }
 
 class Status extends Component {
+	/* A class for the status at the bottom */
+	
+	
 	render() {
 		return (
 			<div className="status"> 
@@ -25,21 +30,43 @@ class Status extends Component {
 }
 
 class Board extends Component {
+	/* A class for the connect four board */
+	
 	render() {
 		return (
 			<div> 
-				<Piece color="blue" /> <Piece color="blue"/> <Piece color="red"/> <br /> 
-				<Piece color="red" /> <Piece color="blue" /> <Piece color="red" /> <br />
-				<Piece color="red" /> <Piece color="blue" /> <Piece color="blue" /> <br /> 
+				<Piece />
+				<Piece /> 
+				<Piece /> 
+				<br /> 
+				
+				<Piece /> 
+				<Piece /> 
+				<Piece /> 
+				<br />
+				
+				<Piece /> 
+				<Piece />
+				<Piece />
+				<br /> 
 			</div> 
 		);
 	}
 }
 
 class Piece extends Component{
+	/* A class for each circle in the board */ 
+	
+	constructor(props) {
+		super(props); 
+		this.state = {
+			color: "blank",
+		}
+	}
+	
 	render() {
 		return (
-			<span class={"dot " + this.props.color}></span>
+			<span class= {"dot " + this.state.color}></span>
 		);
 	}
 }
