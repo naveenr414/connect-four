@@ -1,9 +1,9 @@
-.App {
+.Game {
   text-align: center;
   padding-top: 10%;
 }
 
-.App-header {
+.Game-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;

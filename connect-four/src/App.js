@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
 
-class App extends Component {
-	/* A class for the whole App */
+class Game extends Component {
+	/* A class for the whole Game */
 	
   render() {
     return (
-     <div className="App">
+     <div className="Game">
 			<Board />
 			<Status /> 
      </div>
@@ -62,7 +62,6 @@ class Board extends Component {
 				}
 				
 				if(works){
-					console.log("Won horizontal from "+i);
 					return originalColor;
 				}
 			}
@@ -80,7 +79,6 @@ class Board extends Component {
 				}
 				
 				if(works){
-					console.log("Won vertical from "+i);
 					return originalColor;
 				}
 			}
@@ -98,7 +96,6 @@ class Board extends Component {
 				}
 				
 				if(works){
-						console.log("Won down diagonal from "+i);
 					return originalColor;
 				}
 			}
@@ -116,7 +113,6 @@ class Board extends Component {
 				}
 				
 				if(works){
-					console.log("Won up diagonal "+i);
 					return originalColor;
 				}
 			}
@@ -196,4 +192,4 @@ class Piece extends Component{
 	}
 }
 
-export default App;
+export default Game;
