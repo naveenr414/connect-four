@@ -4,31 +4,6 @@ import './App.css';
 class Game extends Component {
 	/* A class for the whole Game */
 	
-  render() {
-    return (
-     <div className="Game">
-			<Board />
-			<Status /> 
-     </div>
-    );
-  }
-}
-
-class Status extends Component {
-	/* A class for the status at the bottom */
-	
-	render() {
-		return (
-			<div className="status"> 
-				Black is winning 
-			</div> 
-		);
-	}
-}
-
-class Board extends Component {
-	/* A class for the connect four board */
-	
 	constructor(props){
 		super(props);
 		
@@ -43,10 +18,13 @@ class Board extends Component {
 			boardColors.push(temp);
 		}
 	
+		this.changeColor.bind(this);
+	
 		this.state = {
 			boardColors: boardColors, 
 			nextColor: "red",
 		}
+		
 	}
 	
 	checkWin(board){
@@ -66,7 +44,7 @@ class Board extends Component {
 				}
 			}
 		}
-		
+			
 		/* Check Vertical */ 
 		for(var i = 0;i<board.length;i++){
 			for(var j = 0;j<board[0].length;j++){
@@ -123,7 +101,7 @@ class Board extends Component {
 	
 	changeColor(column){
 		/* Place a piece on this column */ 
-		
+				
 		/* Find out which row is the lowest unfilled one */ 
 		var row = this.state.boardColors.length-1;
 		var boardColors = this.state.boardColors.slice();
@@ -151,31 +129,57 @@ class Board extends Component {
 		}
 	}
 	
+  render() {
+    return (
+     <div className="Game">
+			<Board boardColors={this.state.boardColors} onClick = {(column) => this.changeColor(column)} />
+			<Status /> 
+     </div>
+    );
+  }
+}
+
+class Status extends Component {
+	/* A class for the status at the bottom */
+	
+	render() {
+		return (
+			<div className="status"> 
+				Black is winning 
+			</div> 
+		);
+	}
+}
+
+class Board extends Component {
+	/* A class for the connect four board */
+
+	
 	render() {
 		return (
 			<div> 
-				<Piece color={this.state.boardColors[0][0]} onClick={() => this.changeColor(0)} />
-				<Piece color={this.state.boardColors[0][1]} onClick={() => this.changeColor(1)} />
-				<Piece color={this.state.boardColors[0][2]} onClick={() => this.changeColor(2)} />
-				<Piece color={this.state.boardColors[0][3]} onClick={() => this.changeColor(3)} />
+				<Piece color={this.props.boardColors[0][0]} onClick={() => this.props.onClick(0)} />
+				<Piece color={this.props.boardColors[0][1]} onClick={() => this.props.onClick(1)} />
+				<Piece color={this.props.boardColors[0][2]} onClick={() => this.props.onClick(2)} />
+				<Piece color={this.props.boardColors[0][3]} onClick={() => this.props.onClick(3)} />
 				<br /> 
 				
-				<Piece color={this.state.boardColors[1][0]} onClick={() => this.changeColor(0)} />
-				<Piece color={this.state.boardColors[1][1]} onClick={() => this.changeColor(1)} />
-				<Piece color={this.state.boardColors[1][2]} onClick={() => this.changeColor(2)} />
-				<Piece color={this.state.boardColors[1][3]} onClick={() => this.changeColor(3)} />
+				<Piece color={this.props.boardColors[1][0]} onClick={() => this.props.onClick(0)} />
+				<Piece color={this.props.boardColors[1][1]} onClick={() => this.props.onClick(1)} />
+				<Piece color={this.props.boardColors[1][2]} onClick={() => this.props.onClick(2)} />
+				<Piece color={this.props.boardColors[1][3]} onClick={() => this.props.onClick(3)} />
 				<br />
 				
-				<Piece color={this.state.boardColors[2][0]} onClick={() => this.changeColor(0)} />
-				<Piece color={this.state.boardColors[2][1]} onClick={() => this.changeColor(1)} />
-				<Piece color={this.state.boardColors[2][2]} onClick={() => this.changeColor(2)} />
-				<Piece color={this.state.boardColors[2][3]} onClick={() => this.changeColor(3)} />
+				<Piece color={this.props.boardColors[2][0]} onClick={() => this.props.onClick(0)} />
+				<Piece color={this.props.boardColors[2][1]} onClick={() => this.props.onClick(1)} />
+				<Piece color={this.props.boardColors[2][2]} onClick={() => this.props.onClick(2)} />
+				<Piece color={this.props.boardColors[2][3]} onClick={() => this.props.onClick(3)} />
 				<br /> 
 				
-				<Piece color={this.state.boardColors[3][0]} onClick={() => this.changeColor(0)} />
-				<Piece color={this.state.boardColors[3][1]} onClick={() => this.changeColor(1)} />
-				<Piece color={this.state.boardColors[3][2]} onClick={() => this.changeColor(2)} />
-				<Piece color={this.state.boardColors[3][3]} onClick={() => this.changeColor(3)} />
+				<Piece color={this.props.boardColors[3][0]} onClick={() => this.props.onClick(0)} />
+				<Piece color={this.props.boardColors[3][1]} onClick={() => this.props.onClick(1)}/>
+				<Piece color={this.props.boardColors[3][2]} onClick={() => this.props.onClick(2)} />
+				<Piece color={this.props.boardColors[3][3]} onClick={() => this.props.onClick(3)} />
 				
 			</div> 
 		);
