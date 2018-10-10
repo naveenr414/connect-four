@@ -34,9 +34,9 @@ class Board extends Component {
 		
 		// Creates a blank 3x3 grid with the color of each of the pieces
 		var boardColors = []
-		for(var i = 0;i<3;i++){
+		for(var i = 0;i<4;i++){
 			var temp = [];
-			for (var j = 0;j<3;j++){
+			for (var j = 0;j<4;j++){
 				temp.push("blank");
 			}
 			
@@ -49,25 +49,109 @@ class Board extends Component {
 		}
 	}
 	
+	checkWin(board){
+		/* Check horizontal */ 
+		for(var i = 0;i<board.length;i++){
+			for(var j = 0;j<board[0].length;j++){
+				/* Start at (i,j) and go 4 to the right */ 
+				var originalColor = board[i][j];
+				var works = originalColor!=="blank";
+				
+				for(var k = 1;k<4;k++){
+					works&= j+k<board[0].length && board[i][j+k]===originalColor;
+				}
+				
+				if(works){
+					console.log("Won horizontal from "+i);
+					return originalColor;
+				}
+			}
+		}
+		
+		/* Check Vertical */ 
+		for(var i = 0;i<board.length;i++){
+			for(var j = 0;j<board[0].length;j++){
+				/* Start at (i,j) and go 4 to the down */ 
+				var originalColor = board[i][j];
+				var works = originalColor!=="blank";
+				
+				for(var k = 1;k<4;k++){
+					works&= i+k<board.length && board[i+k][j]===originalColor;
+				}
+				
+				if(works){
+					console.log("Won vertical from "+i);
+					return originalColor;
+				}
+			}
+		}
+		
+		/* Check Diagonal, going down and right */ 
+		for(var i = 0;i<board.length;i++){
+			for(var j = 0;j<board[0].length;j++){
+				/* Start at (i,j) and go 4 to the down */ 
+				var originalColor = board[i][j];
+				var works = originalColor!=="blank";
+				
+				for(var k = 1;k<4;k++){
+					works&= i+k<board.length && j+k<board[0].length && board[i+k][j+k]===originalColor;
+				}
+				
+				if(works){
+						console.log("Won down diagonal from "+i);
+					return originalColor;
+				}
+			}
+		}
+		
+		/* Check diagonal, going up and right */ 
+		for(var i = 0;i<board.length;i++){
+			for(var j = 0;j<board[0].length;j++){
+				/* Start at (i,j) and go 4 to the down */ 
+				var originalColor = board[i][j];
+				var works = originalColor!=="blank";
+				
+				for(var k = 1;k<4;k++){
+					works&= i-k>=0 && j+k<board[0].length && board[i-k][j+k]===originalColor;
+				}
+				
+				if(works){
+					console.log("Won up diagonal "+i);
+					return originalColor;
+				}
+			}
+		}
+		
+		return "";
+	}
+	
 	changeColor(column){
 		/* Place a piece on this column */ 
 		
 		/* Find out which row is the lowest unfilled one */ 
 		var row = this.state.boardColors.length-1;
-		while(row>=0 && this.state.boardColors[row][column]!=="blank") {
-			alert(this.state.boardColors[row][column]);
+		var boardColors = this.state.boardColors.slice();
+		var noWinner = this.checkWin(boardColors)==="";
+		
+		while (row>=0 && boardColors[row][column]!=="blank") {
 			row-=1;
 		}
 				
 		/* If row is -1, then the column is completly filled */ 
-		if(row !== -1) {
-			var boardColors = this.state.boardColors.slice();
+		if (row !== -1 && noWinner) {
 			boardColors[row][column] = this.state.nextColor;
 					
 			this.setState({
 				boardColors: boardColors, 
 				nextColor: this.state.nextColor==="red"?"blue":"red",
 			});
+			
+			var winner = this.checkWin(boardColors);
+			
+			/* Check if the game is over */ 
+			if (winner!=="") {
+				alert(this.checkWin(boardColors));
+			}
 		}
 	}
 	
@@ -77,17 +161,26 @@ class Board extends Component {
 				<Piece color={this.state.boardColors[0][0]} onClick={() => this.changeColor(0)} />
 				<Piece color={this.state.boardColors[0][1]} onClick={() => this.changeColor(1)} />
 				<Piece color={this.state.boardColors[0][2]} onClick={() => this.changeColor(2)} />
+				<Piece color={this.state.boardColors[0][3]} onClick={() => this.changeColor(3)} />
 				<br /> 
 				
 				<Piece color={this.state.boardColors[1][0]} onClick={() => this.changeColor(0)} />
 				<Piece color={this.state.boardColors[1][1]} onClick={() => this.changeColor(1)} />
 				<Piece color={this.state.boardColors[1][2]} onClick={() => this.changeColor(2)} />
+				<Piece color={this.state.boardColors[1][3]} onClick={() => this.changeColor(3)} />
 				<br />
 				
 				<Piece color={this.state.boardColors[2][0]} onClick={() => this.changeColor(0)} />
 				<Piece color={this.state.boardColors[2][1]} onClick={() => this.changeColor(1)} />
 				<Piece color={this.state.boardColors[2][2]} onClick={() => this.changeColor(2)} />
+				<Piece color={this.state.boardColors[2][3]} onClick={() => this.changeColor(3)} />
 				<br /> 
+				
+				<Piece color={this.state.boardColors[3][0]} onClick={() => this.changeColor(0)} />
+				<Piece color={this.state.boardColors[3][1]} onClick={() => this.changeColor(1)} />
+				<Piece color={this.state.boardColors[3][2]} onClick={() => this.changeColor(2)} />
+				<Piece color={this.state.boardColors[3][3]} onClick={() => this.changeColor(3)} />
+				
 			</div> 
 		);
 	}
