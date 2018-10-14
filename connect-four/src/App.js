@@ -23,6 +23,7 @@ class Game extends Component {
 		this.state = {
 			boardColors: boardColors, 
 			nextColor: "red",
+			winner: "", 
 		}
 		
 	}
@@ -114,18 +115,19 @@ class Game extends Component {
 		/* If row is -1, then the column is completly filled */ 
 		if (row !== -1 && noWinner) {
 			boardColors[row][column] = this.state.nextColor;
-					
+			
+			var winningTeam = this.checkWin(boardColors);
+			var message = "";
+			
+			if(winningTeam !== ""){
+				message = "The winner is "+winningTeam
+			}
+			
 			this.setState({
 				boardColors: boardColors, 
 				nextColor: this.state.nextColor==="red"?"blue":"red",
+				winner: message, 
 			});
-			
-			var winner = this.checkWin(boardColors);
-			
-			/* Check if the game is over */ 
-			if (winner!=="") {
-				alert(this.checkWin(boardColors));
-			}
 		}
 	}
 	
@@ -133,7 +135,7 @@ class Game extends Component {
     return (
      <div className="Game">
 			<Board boardColors={this.state.boardColors} onClick = {(column) => this.changeColor(column)} />
-			<Status /> 
+			<Status winner={this.state.winner} /> 
      </div>
     );
   }
@@ -145,7 +147,7 @@ class Status extends Component {
 	render() {
 		return (
 			<div className="status"> 
-				Black is winning 
+				{this.props.winner}
 			</div> 
 		);
 	}
