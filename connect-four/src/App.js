@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import './App.css';
 
+var boardSize = 4;
+
 class Game extends Component {
 	/* A class for the whole Game */
 	
 	constructor(props){
 		super(props);
 		
-		// Creates a blank 3x3 grid with the color of each of the pieces
+		// Creates a blank grid with the color of each of the pieces
 		var boardColors = []
-		for(var i = 0;i<4;i++){
+		for(var i = 0;i<boardSize;i++){
 			var temp = [];
-			for (var j = 0;j<4;j++){
+			for (var j = 0;j<boardSize;j++){
 				temp.push("blank");
 			}
 			
@@ -32,11 +34,11 @@ class Game extends Component {
 		/* Check horizontal */ 
 		for(var i = 0;i<board.length;i++){
 			for(var j = 0;j<board[0].length;j++){
-				/* Start at (i,j) and go 4 to the right */ 
+				/* Start at (i,j) and go all the way to the right */ 
 				var originalColor = board[i][j];
 				var works = originalColor!=="blank";
 				
-				for(var k = 1;k<4;k++){
+				for(var k = 1;k<boardSize;k++){
 					works&= j+k<board[0].length && board[i][j+k]===originalColor;
 				}
 				
@@ -49,11 +51,11 @@ class Game extends Component {
 		/* Check Vertical */ 
 		for(var i = 0;i<board.length;i++){
 			for(var j = 0;j<board[0].length;j++){
-				/* Start at (i,j) and go 4 to the down */ 
+				/* Start at (i,j) and go all the way down */ 
 				var originalColor = board[i][j];
 				var works = originalColor!=="blank";
 				
-				for(var k = 1;k<4;k++){
+				for(var k = 1;k<boardSize;k++){
 					works&= i+k<board.length && board[i+k][j]===originalColor;
 				}
 				
@@ -66,11 +68,11 @@ class Game extends Component {
 		/* Check Diagonal, going down and right */ 
 		for(var i = 0;i<board.length;i++){
 			for(var j = 0;j<board[0].length;j++){
-				/* Start at (i,j) and go 4 to the down */ 
+				/* Start at (i,j) and go down and right */ 
 				var originalColor = board[i][j];
 				var works = originalColor!=="blank";
 				
-				for(var k = 1;k<4;k++){
+				for(var k = 1;k<boardSize;k++){
 					works&= i+k<board.length && j+k<board[0].length && board[i+k][j+k]===originalColor;
 				}
 				
@@ -83,11 +85,11 @@ class Game extends Component {
 		/* Check diagonal, going up and right */ 
 		for(var i = 0;i<board.length;i++){
 			for(var j = 0;j<board[0].length;j++){
-				/* Start at (i,j) and go 4 to the down */ 
+				/* Start at (i,j) and go diagonally up and right */ 
 				var originalColor = board[i][j];
 				var works = originalColor!=="blank";
 				
-				for(var k = 1;k<4;k++){
+				for(var k = 1;k<boardSize;k++){
 					works&= i-k>=0 && j+k<board[0].length && board[i-k][j+k]===originalColor;
 				}
 				
