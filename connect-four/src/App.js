@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
-var boardSize = 4;
+var boardSize = 8;
 
 class Game extends Component {
 	/* A class for the whole Game */
@@ -104,7 +104,7 @@ class Game extends Component {
 	
 	changeColor(column){
 		/* Place a piece on this column */ 
-				
+															
 		/* Find out which row is the lowest unfilled one */ 
 		var row = this.state.boardColors.length-1;
 		var boardColors = this.state.boardColors.slice();
@@ -113,7 +113,7 @@ class Game extends Component {
 		while (row>=0 && boardColors[row][column]!=="blank") {
 			row-=1;
 		}
-				
+						
 		/* If row is -1, then the column is completly filled */ 
 		if (row !== -1 && noWinner) {
 			boardColors[row][column] = this.state.nextColor;
@@ -160,33 +160,21 @@ class Board extends Component {
 
 	
 	render() {
-		return (
-			<div> 
-				<Piece color={this.props.boardColors[0][0]} onClick={() => this.props.onClick(0)} />
-				<Piece color={this.props.boardColors[0][1]} onClick={() => this.props.onClick(1)} />
-				<Piece color={this.props.boardColors[0][2]} onClick={() => this.props.onClick(2)} />
-				<Piece color={this.props.boardColors[0][3]} onClick={() => this.props.onClick(3)} />
-				<br /> 
+		var pieces = [];
+		
+		var numbers = [0,1,2,3,4,5,6,7];
+		var colors = ["blue","red","blank"];
+		
+		for(var i = 0;i<boardSize;i++){
+			let tempI = i;
+			for(var j = 0;j<boardSize;j++){	
+				let tempJ = j;	
+				pieces.push(<Piece key = {("piece"+boardSize*tempI+tempJ).toString()} color={this.props.boardColors[tempI][tempJ]} onClick={() => this.props.onClick(tempJ)} />);				
+			}
+			pieces.push(<br key={"br"+tempI.toString()}/>);
+		}
 				
-				<Piece color={this.props.boardColors[1][0]} onClick={() => this.props.onClick(0)} />
-				<Piece color={this.props.boardColors[1][1]} onClick={() => this.props.onClick(1)} />
-				<Piece color={this.props.boardColors[1][2]} onClick={() => this.props.onClick(2)} />
-				<Piece color={this.props.boardColors[1][3]} onClick={() => this.props.onClick(3)} />
-				<br />
-				
-				<Piece color={this.props.boardColors[2][0]} onClick={() => this.props.onClick(0)} />
-				<Piece color={this.props.boardColors[2][1]} onClick={() => this.props.onClick(1)} />
-				<Piece color={this.props.boardColors[2][2]} onClick={() => this.props.onClick(2)} />
-				<Piece color={this.props.boardColors[2][3]} onClick={() => this.props.onClick(3)} />
-				<br /> 
-				
-				<Piece color={this.props.boardColors[3][0]} onClick={() => this.props.onClick(0)} />
-				<Piece color={this.props.boardColors[3][1]} onClick={() => this.props.onClick(1)}/>
-				<Piece color={this.props.boardColors[3][2]} onClick={() => this.props.onClick(2)} />
-				<Piece color={this.props.boardColors[3][3]} onClick={() => this.props.onClick(3)} />
-				
-			</div> 
-		);
+		return (<div> {pieces} </div>);
 	}
 }
 
