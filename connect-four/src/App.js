@@ -31,74 +31,30 @@ class Game extends Component {
 	}
 	
 	checkWin(board){
-		/* Check horizontal */ 
-		for(var i = 0;i<board.length;i++){
-			for(var j = 0;j<board[0].length;j++){
-				/* Start at (i,j) and go all the way to the right */ 
-				var originalColor = board[i][j];
-				var works = originalColor!=="blank";
-				
-				for(var k = 1;k<4;k++){
-					works&= j+k<board[0].length && board[i][j+k]===originalColor;
-				}
-				
-				if(works){
-					return originalColor;
-				}
-			}
-		}
-			
-		/* Check Vertical */ 
-		for(var i = 0;i<board.length;i++){
-			for(var j = 0;j<board[0].length;j++){
-				/* Start at (i,j) and go all the way down */ 
-				var originalColor = board[i][j];
-				var works = originalColor!=="blank";
-				
-				for(var k = 1;k<4;k++){
-					works&= i+k<board.length && board[i+k][j]===originalColor;
-				}
-				
-				if(works){
-					return originalColor;
-				}
-			}
-		}
+		var directions = [[1,0],[0,1],[1,1],[1,-1]];
 		
-		/* Check Diagonal, going down and right */ 
-		for(var i = 0;i<board.length;i++){
-			for(var j = 0;j<board[0].length;j++){
-				/* Start at (i,j) and go down and right */ 
-				var originalColor = board[i][j];
-				var works = originalColor!=="blank";
-				
-				for(var k = 1;k<4;k++){
-					works&= i+k<board.length && j+k<board[0].length && board[i+k][j+k]===originalColor;
-				}
-				
-				if(works){
-					return originalColor;
-				}
-			}
-		}
-		
-		/* Check diagonal, going up and right */ 
-		for(var i = 0;i<board.length;i++){
-			for(var j = 0;j<board[0].length;j++){
-				/* Start at (i,j) and go diagonally up and right */ 
-				var originalColor = board[i][j];
-				var works = originalColor!=="blank";
-				
-				for(var k = 1;k<4;k++){
-					works&= i-k>=0 && j+k<board[0].length && board[i-k][j+k]===originalColor;
-				}
-				
-				if(works){
-					return originalColor;
+		for(var d = 0;d<directions.length;d++){
+			/* Check horizontal */ 
+			for(var i = 0;i<board.length;i++){
+				for(var j = 0;j<board[0].length;j++){
+					/* Start at (i,j) and go all the way to the right */ 
+					var originalColor = board[i][j];
+					var works = originalColor!=="blank";
+					
+					for(var k = 1;k<4;k++){
+						var dY = directions[d][1]*k;
+						var dX = directions[d][0]*k;
+												
+						works&= i+dY>=0 && i+dY<board.length && j+dX<board[0].length && board[i+dY][j+dX]===originalColor;
+					}
+					
+					if(works){
+						return originalColor;
+					}
 				}
 			}
 		}
-		
+
 		return "";
 	}
 	
@@ -205,10 +161,7 @@ class Board extends Component {
 
 	
 	render() {
-		var pieces = [];
-		
-		var numbers = [0,1,2,3,4,5,6,7];
-		var colors = ["blue","red","blank"];
+		var pieces = [];		
 		
 		for(var i = 0;i<boardSize;i++){
 			let tempI = i;
