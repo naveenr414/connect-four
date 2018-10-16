@@ -103,7 +103,8 @@ class Game extends Component {
 	}
 	
 	nextRow(column){
-		/* What's the lowest row that's empty */ 
+		/* What's the lowest row that's empty */
+		
 		var row = this.state.boardColors.length-1;
 		var boardColors = this.state.boardColors.slice();
 				
@@ -114,9 +115,43 @@ class Game extends Component {
 		return row;
 	}
 	
+	unhover(column){
+		var boardColors = this.state.boardColors.slice();
+		var row = this.nextRow(column);
+		var noWinner = this.checkWin(boardColors)==="";
+		
+		row+=1;
+	
+		if(row !== -1 && noWinner && boardColors[row][column].includes("Hover")){
+			boardColors[row][column] = "blank";
+			
+			this.setState({
+				boardColors: boardColors, 
+			});
+		}
+	}
+	
+	hover(column){
+		var boardColors = this.state.boardColors.slice();
+		var row = this.nextRow(column);
+		var noWinner = this.checkWin(boardColors)==="";
+	
+		if(row !== -1 && noWinner){
+			var hoverColor = this.state.nextColor+"Hover";
+			
+			boardColors[row][column] = hoverColor;
+			
+			this.setState({
+				boardColors: boardColors, 
+			});
+		}
+	}
+	
 	changeColor(column){
 		/* Place a piece on this column */ 
-															
+		
+		this.unhover(column);
+		
 		/* Find out which row is the lowest unfilled one */ 
 		var boardColors = this.state.boardColors.slice();
 		var noWinner = this.checkWin(boardColors)==="";
@@ -146,7 +181,7 @@ class Game extends Component {
   render() {
     return (
      <div className="Game">
-			<Board boardColors={this.state.boardColors} onClick = {(column) => this.changeColor(column)} />
+			<Board boardColors={this.state.boardColors} onMouseLeave = {(column)=>this.unhover(column)} onMouseOver = {(column) => this.hover(column)} onClick = {(column) => this.changeColor(column)} />
 			<Status winner={this.state.winner} /> 
      </div>
     );
@@ -179,7 +214,7 @@ class Board extends Component {
 			let tempI = i;
 			for(var j = 0;j<boardSize;j++){	
 				let tempJ = j;	
-				pieces.push(<Piece key = {("piece"+boardSize*tempI+tempJ).toString()} color={this.props.boardColors[tempI][tempJ]} onClick={() => this.props.onClick(tempJ)} />);				
+				pieces.push(<Piece key = {("piece"+boardSize*tempI+tempJ).toString()} color={this.props.boardColors[tempI][tempJ]} onMouseLeave = { ()=> this.props.onMouseLeave(tempJ)}  onMouseOver = {() => this.props.onMouseOver(tempJ)} onClick={() => this.props.onClick(tempJ)} />);				
 			}
 			pieces.push(<br key={"br"+tempI.toString()}/>);
 		}
@@ -193,7 +228,7 @@ class Piece extends Component{
 	
 	render() {
 		return (
-			<span className= {"dot " + this.props.color} onClick={() => this.props.onClick()}></span>
+			<span className= {"dot " + this.props.color} onMouseLeave = {() => this.props.onMouseLeave()} onMouseOver = {() => this.props.onMouseOver()} onClick={() => this.props.onClick()}></span>
 		);
 	}
 }
