@@ -38,7 +38,7 @@ class Game extends Component {
 				var originalColor = board[i][j];
 				var works = originalColor!=="blank";
 				
-				for(var k = 1;k<boardSize;k++){
+				for(var k = 1;k<4;k++){
 					works&= j+k<board[0].length && board[i][j+k]===originalColor;
 				}
 				
@@ -55,7 +55,7 @@ class Game extends Component {
 				var originalColor = board[i][j];
 				var works = originalColor!=="blank";
 				
-				for(var k = 1;k<boardSize;k++){
+				for(var k = 1;k<4;k++){
 					works&= i+k<board.length && board[i+k][j]===originalColor;
 				}
 				
@@ -72,7 +72,7 @@ class Game extends Component {
 				var originalColor = board[i][j];
 				var works = originalColor!=="blank";
 				
-				for(var k = 1;k<boardSize;k++){
+				for(var k = 1;k<4;k++){
 					works&= i+k<board.length && j+k<board[0].length && board[i+k][j+k]===originalColor;
 				}
 				
@@ -89,7 +89,7 @@ class Game extends Component {
 				var originalColor = board[i][j];
 				var works = originalColor!=="blank";
 				
-				for(var k = 1;k<boardSize;k++){
+				for(var k = 1;k<4;k++){
 					works&= i-k>=0 && j+k<board[0].length && board[i-k][j+k]===originalColor;
 				}
 				
@@ -122,6 +122,8 @@ class Game extends Component {
 			var message = "";
 			
 			if(winningTeam !== ""){
+				/* Make the first letter of winningTeam capitalized */ 
+				winningTeam = winningTeam.charAt(0).toUpperCase() + winningTeam.slice(1);
 				message = "The winner is "+winningTeam
 			}
 			
