@@ -102,17 +102,25 @@ class Game extends Component {
 		return "";
 	}
 	
+	nextRow(column){
+		/* What's the lowest row that's empty */ 
+		var row = this.state.boardColors.length-1;
+		var boardColors = this.state.boardColors.slice();
+				
+		while (row>=0 && boardColors[row][column]!=="blank") {
+			row-=1;
+		}
+		
+		return row;
+	}
+	
 	changeColor(column){
 		/* Place a piece on this column */ 
 															
 		/* Find out which row is the lowest unfilled one */ 
-		var row = this.state.boardColors.length-1;
 		var boardColors = this.state.boardColors.slice();
 		var noWinner = this.checkWin(boardColors)==="";
-		
-		while (row>=0 && boardColors[row][column]!=="blank") {
-			row-=1;
-		}
+		var row = this.nextRow(column);
 						
 		/* If row is -1, then the column is completly filled */ 
 		if (row !== -1 && noWinner) {
