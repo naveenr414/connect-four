@@ -37,15 +37,16 @@ class Game extends Component {
 			/* Check horizontal */ 
 			for(var i = 0;i<board.length;i++){
 				for(var j = 0;j<board[0].length;j++){
-					/* Start at (i,j) and go all the way to the right */ 
+					/* Start at i,j and go 4 in that direction*/ 
 					var originalColor = board[i][j];
 					var works = originalColor!=="blank";
 					
 					for(var k = 1;k<4;k++){
 						var dY = directions[d][1]*k;
 						var dX = directions[d][0]*k;
-												
-						works&= i+dY>=0 && i+dY<board.length && j+dX<board[0].length && board[i+dY][j+dX]===originalColor;
+						
+						var inBoard = i+dY>=0 && i+dY<board.length && j+dX<board[0].length;						
+						works&= inBoard && board[i+dY][j+dX]===originalColor;
 					}
 					
 					if(works){
@@ -72,12 +73,15 @@ class Game extends Component {
 	}
 	
 	unhover(column){
-		var boardColors = this.state.boardColors.slice();
-		var row = this.nextRow(column);
-		var noWinner = this.checkWin(boardColors)==="";
+		/* 	Mouse stopped hovering
+				Unlight the highest available cricle 
+		*/ 
 		
-		row+=1;
-	
+		var boardColors = this.state.boardColors.slice();
+		// Which row would the highlighted circle be on
+		var row = this.nextRow(column)+1;
+		var noWinner = this.checkWin(boardColors)==="";
+			
 		if(row !== -1 && noWinner && boardColors[row][column].includes("Hover")){
 			boardColors[row][column] = "blank";
 			
@@ -88,10 +92,15 @@ class Game extends Component {
 	}
 	
 	hover(column){
+		/* 	Mouse is hovering over the column
+				So highlight the highest available circle
+		*/ 
+		
 		var boardColors = this.state.boardColors.slice();
 		var row = this.nextRow(column);
 		var noWinner = this.checkWin(boardColors)==="";
 	
+		// We can't highlight if the game is over
 		if(row !== -1 && noWinner){
 			var hoverColor = this.state.nextColor+"Hover";
 			
