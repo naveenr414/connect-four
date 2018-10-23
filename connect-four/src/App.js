@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
-var boardSize = 8;
+var boardSize = 12;
 
 class Game extends Component {
 	/* A class for the whole Game */
